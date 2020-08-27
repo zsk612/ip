@@ -1,3 +1,6 @@
+import java.util.Scanner;
+
+
 public class Duke {
     public static void main(String[] args) {
         String logo = " ____        _        \n"
@@ -8,9 +11,16 @@ public class Duke {
         System.out.println("Hello from\n" + logo);
 
         greet();
+        String response;
+        Scanner in = new Scanner(System.in);
+        response = in.nextLine();
+        while(!response.equals("bye")){
+            System.out.println(response);
+            response = in.nextLine();
+        }
         exit();
+        in.close();
     }
-
 
     public static void greet() {
         System.out.println("Hello! I'm Duke");
