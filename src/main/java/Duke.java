@@ -13,11 +13,9 @@ public class Duke {
         greet();
         String response;
         Scanner in = new Scanner(System.in);
-        System.out.println("Talk with me!");
         response = in.nextLine();
         while(!response.equals("bye")){
             System.out.println(response);
-            System.out.println("Say something more!");
             response = in.nextLine();
         }
         exit();
