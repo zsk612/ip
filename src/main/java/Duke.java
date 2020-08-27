@@ -13,18 +13,18 @@ public class Duke {
         System.out.println("Hello from\n" + logo);
 
         greet();
-        ArrayList<String> storedInfo = new ArrayList<String>();
+        ArrayList<String> storedInfos = new ArrayList<>();
         Scanner in = new Scanner(System.in);
         System.out.println("Talk with me!");
         String response = in.nextLine();
         while(!response.equals("bye")){
             if(response.equals("list")) {
-                display(storedInfo);
+                display(storedInfos);
                 System.out.println("Say something more!");
                 response = in.nextLine();
             } else {
                 System.out.println("Information stored: " + response);
-                storedInfo.add(response);
+                storedInfos.add(response);
                 System.out.println("Say something more!");
                 response = in.nextLine();
             }
@@ -37,8 +37,12 @@ public class Duke {
         System.out.println("Hello! I'm Duke");
         System.out.println("What can I do for you?");
     }
-    public static void display(ArrayList<String> storedInfo) {
-        System.out.println(storedInfo);
+    public static void display(ArrayList<String> storedInfos) {
+        int numOfInfo = 1;
+        for(String storedInfo : storedInfos) {
+            System.out.println(numOfInfo + "." + storedInfo);
+            numOfInfo++;
+        }
     }
 
 
