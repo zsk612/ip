@@ -37,6 +37,7 @@ public class Duke {
         System.out.println("Hello! I'm Duke");
         System.out.println("What can I do for you?");
     }
+
     public static void display(ArrayList<String> storedInfos) {
         int numOfInfo = 1;
         for(String storedInfo : storedInfos) {
