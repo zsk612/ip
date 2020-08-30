@@ -11,7 +11,6 @@ public class Duke {
                 + "| |_| | |_| |   <  __/\n"
                 + "|____/ \\__,_|_|\\_\\___|\n";
         System.out.println("Hello from\n" + logo);
-
         greet();
         ArrayList<Task> storedTasks = new ArrayList<>();
         Scanner in = new Scanner(System.in);
