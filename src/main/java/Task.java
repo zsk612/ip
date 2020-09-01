@@ -8,15 +8,17 @@ public class Task {
         this.description = description;
         this.isDone = false;
     }
-    public void setDescription(String description) {
-        this.description = description;
-    }
 
     public void setDone() {
         this.isDone = true;
     }
 
+    //return tick or X symbols
     public String getStatusIcon() {
-        return (isDone ? "\u2713" : "\u2718"); //return tick or X symbols
+        return (isDone ? "\u2713" : "\u2718");
+    }
+
+    public String toString() {
+        return "[" + this.getStatusIcon() + "] " + this.description;
     }
 }
