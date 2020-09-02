@@ -1,0 +1,8 @@
+todo have lunch
+todo go hiking
+list
+done 2
+deadline do French homework /by next Tuesday
+event Zoom meeting /at tomorrow afternoon
+done 3
+bye

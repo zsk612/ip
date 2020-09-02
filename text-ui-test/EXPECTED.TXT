@@ -5,3 +5,50 @@ Hello from
 | |_| | |_| |   <  __/
 |____/ \__,_|_|\_\___|
 
+Hello! I'm Duke
+What can I do for you?
+Tell me your plan!
+Got it. I've added this task:
+	[T][✘] have lunch
+Now you have 1 task
+---------------------
+What else?
+---------------------
+Got it. I've added this task:
+	[T][✘] go hiking
+Now you have 2 tasks
+---------------------
+What else?
+---------------------
+Here are the tasks in your list:
+1. [T][✘] have lunch
+2. [T][✘] go hiking
+---------------------
+What else?
+---------------------
+Here are the tasks in your list:
+1. [T][✘] have lunch
+2. [T][✓] go hiking
+---------------------
+What else?
+---------------------
+Got it. I've added this task:
+	[D][✘] do French homework  (by: next Tuesday)
+Now you have 3 tasks
+---------------------
+What else?
+---------------------
+Got it. I've added this task:
+	[E][✘] Zoom meeting  (at: tomorrow afternoon)
+Now you have 4 tasks
+---------------------
+What else?
+---------------------
+Here are the tasks in your list:
+1. [T][✘] have lunch
+2. [T][✓] go hiking
+3. [D][✓] do French homework  (by: next Tuesday)
+4. [E][✘] Zoom meeting  (at: tomorrow afternoon)
+---------------------
+What else?
+Bye. Hope to see you again soon!
