@@ -1,8 +1,14 @@
 todo have lunch
+done 1
 todo go hiking
 list
-done 2
-deadline do French homework /by next Tuesday
-event Zoom meeting /at tomorrow afternoon
 done 3
+done 2
+deadline do French homework
+deadline do French homework /by next Tuesday
+list
+event Zoom meeting
+event Zoom meeting /at tomorrow afternoon
+done 4
+list
 bye
