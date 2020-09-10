@@ -1,8 +1,5 @@
 package src.main.java;
 
-import src.main.java.exceptions.*;
-import src.main.java.tasktypes.*;
-
 import java.util.Scanner;
 import java.util.ArrayList;
 
@@ -12,14 +9,12 @@ public class Duke {
             "Hello! I'm Duke" + "\n"
             + "What can I do for you?" + "\n"
             + "Tell me your plan!";
-    public static final String LIST_DISPLAY_MESSAGE =
-            "Here are the tasks in your list:";
-    public static final String MESSAGE_RECEIVED_MESSAGE =
-            "Got it. I've added this task:";
-    public static final String BYE_MESSAGE =
-            "Bye. Hope to see you again soon!" + "\n";
-
-    public static final String HORIZONTAL_LINE = "---------------------" + "\n";
+    public static final String LIST_DISPLAY_MESSAGE = "Here are the tasks in your list:";
+    public static final String MESSAGE_RECEIVED_MESSAGE = "Got it. I've added this task:";
+    public static final String SPECIFY_TIME_WARNING = "Please specify time!";
+    public static final String ILLEGAL_CMD_WARNING = "No such command! Please try again!";
+    public static final String BYE_MESSAGE = "Bye. Hope to see you again soon!";
+    public static final String HORIZONTAL_LINE = "---------------------";
     public static final String DDL_CMD_SEPARATOR = "/by";
     public static final String EVENT_CMD_SEPARATOR = "/at";
     public static final String DONE_CMD = "done";
@@ -29,55 +24,48 @@ public class Duke {
     public static final String EVENT_CMD = "event";
     public static final String LIST_CMD = "list";
 
-    public static final String ILLEGAL_DONE_INDEX_WARNING =
-            "No task with such index found!" + "\n";
-    public static final String NO_TASK_WARNING =
-            "There is no task yet. Please add your task!" + "\n";
-    public static final String SPECIFY_TASK_NAME_WARNING =
-            "Please specify task!" + "\n";
-    public static final String SPECIFY_TASK_TIME_WARNING = "" +
-            "Please specify time!" + "\n";
-    public static final String ILLEGAL_CMD_WARNING =
-            "No such command! Please try again!" + "\n";
-    public static final String WRONG_DDL_COMMAND_WARNING =
-            "Please add \"/by\" in your command!" + "\n";
-    public static final String WRONG_EVENT_COMMAND_WARNING =
-            "Please add \"/at\" in your command!" + "\n";
-
     public static void main(String[] args) {
 
-        printGreet();
+        greet();
         ArrayList<Task> storedTasks = new ArrayList<>();
         Scanner in = new Scanner(System.in);
         String response = in.nextLine();
 
         while(!response.equals(BYE_CMD)){
 
-            String[] commands = response.trim().split(" ", 2);
+            String[] commands = response.split(" ");
 
-            switch (commands[0].trim()) {
+            switch (commands[0]) {
             case DONE_CMD:
-                executeDoneCommand(storedTasks, commands);
+                int taskNumber = parseInteger(commands[1]);
+                if (taskNumber <= storedTasks.size() && taskNumber >= 1){
+                    storedTasks.get(taskNumber - 1).setDone();
+                    displayFormat(storedTasks);
+                } else {
+                    printIllegalCommandWarning();
+                }
                 break;
             case TODO_CMD:
-                executeTodoCommand(storedTasks, commands);
+                addTodo(storedTasks, commands[1]);
                 break;
             case DEADLINE_CMD:
-                try{
-                    executeDeadlineCommand(storedTasks, response.trim());
-                } catch (WrongCommandFormatException e) {
-                    printWrongDeadlineCommandWarning();
+                if(response.contains(DDL_CMD_SEPARATOR)){
+                    String [] arrOfTaskAndTime = extractWords(response);
+                    addDeadline(storedTasks, arrOfTaskAndTime);
+                } else {
+                    printSpecifyTimeWarning();
                 }
                 break;
             case EVENT_CMD:
-                try{
-                    executeEventCommand(storedTasks, response.trim());
-                } catch (WrongCommandFormatException e) {
-                    printWrongEventCommandWarning();
+                if(response.contains(EVENT_CMD_SEPARATOR)){
+                    String [] arrOfTaskAndTime = extractWords(response);
+                    addEvent(storedTasks, arrOfTaskAndTime);
+                } else {
+                    printSpecifyTimeWarning();
                 }
                 break;
             case LIST_CMD:
-                executeListCommand(storedTasks);
+                displayFormat(storedTasks);
                 break;
             default:
                 printIllegalCommandWarning();
@@ -89,99 +77,21 @@ public class Duke {
 
         }
 
-        printExit();
+        exit();
         in.close();
     }
 
-    public static void printGreet() {
+    public static void greet() {
 
         System.out.println(GREETING_MESSAGE);
     }
 
-    public static void printExit() {
+    public static void displayFormat(ArrayList<Task> storedTasks) {
 
-        System.out.print(HORIZONTAL_LINE + BYE_MESSAGE + HORIZONTAL_LINE);
-    }
-
-    public static void executeListCommand(ArrayList<Task> storedTasks) {
-
-        try {
-            displayFormat(storedTasks);
-        } catch (NoTaskException e) {
-            printNoTaskWarning();
-        }
-    }
-
-    public static void executeEventCommand(ArrayList<Task> storedTasks, String taskResponse)
-            throws WrongCommandFormatException {
-
-        if(!taskResponse.contains(EVENT_CMD_SEPARATOR)) {
-            throw new WrongCommandFormatException();
-        }
-
-        try {
-            String [] arrOfTaskAndTime = extractWords(taskResponse);
-            addEvent(storedTasks, arrOfTaskAndTime);
-        } catch (NoTaskNameException e) {
-            printSpecifyNameWarning();
-        } catch (NoTaskTimeException | IndexOutOfBoundsException e) {
-            printSpecifyTimeWarning();
-        }
-    }
-
-    public static void executeDeadlineCommand(ArrayList<Task> storedTasks, String taskResponse)
-            throws WrongCommandFormatException {
-
-        if(!taskResponse.contains(DDL_CMD_SEPARATOR)) {
-            throw new WrongCommandFormatException();
-        }
-
-        try {
-            String [] arrOfTaskAndTime = extractWords(taskResponse);
-            addDeadline(storedTasks, arrOfTaskAndTime);
-        } catch (NoTaskNameException e) {
-            printSpecifyNameWarning();
-        } catch (NoTaskTimeException | IndexOutOfBoundsException e) {
-            printSpecifyTimeWarning();
-        }
-    }
-
-    public static void executeDoneCommand(ArrayList<Task> storedTasks, String[] commands) {
-
-        try {
-            String doneIndex = commands[1].trim();
-            int taskNumber = Integer.parseInt(doneIndex);
-            storedTasks.get(taskNumber - 1).setDone();
-            executeListCommand(storedTasks);
-        } catch (IndexOutOfBoundsException | NumberFormatException e){
-            printIllegalDoneIndexWarning();
-        }
-    }
-
-    public static void executeTodoCommand(ArrayList<Task> storedTasks, String[] commands) {
-
-        try{
-            String todoTask = commands[1].trim();
-            Todo t = new Todo(todoTask);
-            storedTasks.add(t);
-            displayCurrentTask(storedTasks);
-        } catch (IndexOutOfBoundsException e) {
-            printSpecifyNameWarning();
-        }
-
-
-    }
-
-    public static void displayFormat(ArrayList<Task> storedTasks)
-            throws NoTaskException {
-
-        if(storedTasks.isEmpty()) {
-            throw new NoTaskException();
-        }
-
-        System.out.println(HORIZONTAL_LINE + LIST_DISPLAY_MESSAGE);
+        System.out.println(HORIZONTAL_LINE);
+        System.out.println(LIST_DISPLAY_MESSAGE);
         displayTasks(storedTasks);
-        System.out.print(HORIZONTAL_LINE);
+        System.out.println(HORIZONTAL_LINE);
     }
 
     public static void displayTasks(ArrayList<Task> storedTasks) {
@@ -196,83 +106,66 @@ public class Duke {
 
     public static void displayCurrentTask(ArrayList<Task> storedTasks) {
 
-        System.out.println(HORIZONTAL_LINE + MESSAGE_RECEIVED_MESSAGE);
-        try {
-            System.out.println("\t" + storedTasks.get(storedTasks.size() - 1).toString());
-            System.out.println("Now you have " + storedTasks.size() + " task"
-                    + ((storedTasks.size() > 1) ? "s" : ""));
-        } catch (IndexOutOfBoundsException e) {
-            printNoTaskWarning();
-        }
-        System.out.print(HORIZONTAL_LINE);
+        System.out.println(HORIZONTAL_LINE);
+        System.out.println(MESSAGE_RECEIVED_MESSAGE);
+        System.out.println("\t" + storedTasks.get(storedTasks.size() - 1).toString());
+        System.out.println("Now you have " + storedTasks.size() + " task"
+                + ((storedTasks.size() > 1) ? "s" : ""));
+        System.out.println(HORIZONTAL_LINE);
     }
 
-    public static String[] extractWords(String response)
-            throws NoTaskTimeException, NoTaskNameException {
+    public static String[] extractWords(String response){
 
-        int endIndexOfTask = (response.contains("/")) ?
-                response.indexOf("/") : response.length();
-        int beginIndexOfTask = response.indexOf(" ");
-
-        String taskName = response.substring(beginIndexOfTask, endIndexOfTask).trim();
-
-        String taskTime = response.substring(endIndexOfTask).split(" ", 2)[1];
-
-        if (taskTime.isEmpty()) {
-            throw new NoTaskTimeException();
-        } else if (taskName.isEmpty()) {
-            throw new NoTaskNameException();
-        }
-
+        String[] arrOfResponses = response.split("/", 2);
+        String taskName = arrOfResponses[0].split(" ",2)[1];
+        String taskTime = arrOfResponses[1].split(" ",2)[1];
         return new String[]{taskName, taskTime};
     }
 
-    public static void addDeadline(ArrayList<Task> storedTasks, String[] arrOfTaskAndTime) {
+    public static void addTodo(ArrayList<Task> storedTasks, String response) {
+
+        Todo t = new Todo(response);
+        storedTasks.add(t);
+        displayCurrentTask(storedTasks);
+    }
+
+    public static void addDeadline(ArrayList<Task> storedTasks,
+                                   String[] arrOfTaskAndTime) {
 
         Deadline t = new Deadline(arrOfTaskAndTime[0], arrOfTaskAndTime[1]);
         storedTasks.add(t);
         displayCurrentTask(storedTasks);
     }
 
-    public static void addEvent(ArrayList<Task> storedTasks, String[] arrOfTaskAndTime) {
+    public static void addEvent(ArrayList<Task> storedTasks,
+                                String[] arrOfTaskAndTime) {
 
         Event t = new Event(arrOfTaskAndTime[0], arrOfTaskAndTime[1]);
         storedTasks.add(t);
         displayCurrentTask(storedTasks);
     }
 
+    public static int parseInteger(String str) {
+
+        try {
+            return Integer.parseInt(str);
+        } catch(NumberFormatException e){
+            return -1;
+        }
+    }
+
     public static void printIllegalCommandWarning() {
 
-        System.out.print(HORIZONTAL_LINE + ILLEGAL_CMD_WARNING + HORIZONTAL_LINE);
-    }
-
-    public static void printIllegalDoneIndexWarning() {
-
-        System.out.print(HORIZONTAL_LINE + ILLEGAL_DONE_INDEX_WARNING + HORIZONTAL_LINE);
-    }
-
-    public static void printNoTaskWarning() {
-
-        System.out.print(HORIZONTAL_LINE + NO_TASK_WARNING + HORIZONTAL_LINE);
-    }
-
-    public static void printWrongEventCommandWarning() {
-
-        System.out.print(HORIZONTAL_LINE + WRONG_EVENT_COMMAND_WARNING + HORIZONTAL_LINE);
-    }
-
-    public static void printWrongDeadlineCommandWarning() {
-
-        System.out.print(HORIZONTAL_LINE + WRONG_DDL_COMMAND_WARNING + HORIZONTAL_LINE);
+        System.out.println(ILLEGAL_CMD_WARNING);
     }
 
     public static void printSpecifyTimeWarning() {
 
-        System.out.print(HORIZONTAL_LINE + SPECIFY_TASK_TIME_WARNING + HORIZONTAL_LINE);
+        System.out.println(SPECIFY_TIME_WARNING);
     }
 
-    public static void printSpecifyNameWarning() {
+    public static void exit() {
 
-        System.out.print(HORIZONTAL_LINE + SPECIFY_TASK_NAME_WARNING + HORIZONTAL_LINE);
+        System.out.println(BYE_MESSAGE);
     }
 }

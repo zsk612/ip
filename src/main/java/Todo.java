@@ -1,4 +1,4 @@
-package src.main.java.tasktypes;
+package src.main.java;
 
 public class Todo extends Task {
 
