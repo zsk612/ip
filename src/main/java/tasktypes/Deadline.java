@@ -1,4 +1,6 @@
-package src.main.java;
+package src.main.java.tasktypes;
+
+import src.main.java.tasktypes.Task;
 
 public class Deadline extends Task {
 
