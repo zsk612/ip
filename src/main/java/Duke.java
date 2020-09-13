@@ -14,8 +14,10 @@ public class Duke {
             + "Tell me your plan!";
     public static final String LIST_DISPLAY_MESSAGE =
             "Here are the tasks in your list:";
-    public static final String MESSAGE_RECEIVED_MESSAGE =
+    public static final String ADD_MESSAGE_RECEIVED_MESSAGE =
             "Got it. I've added this task:";
+    public static final String DELETE_MESSAGE_RECEIVED_MESSAGE =
+            "Got it. I've removed this task:";
     public static final String BYE_MESSAGE =
             "Bye. Hope to see you again soon!" + "\n";
 
@@ -28,6 +30,7 @@ public class Duke {
     public static final String DEADLINE_CMD = "deadline";
     public static final String EVENT_CMD = "event";
     public static final String LIST_CMD = "list";
+    public static final String DELETE_CMD = "delete";
 
     public static final String ILLEGAL_DONE_INDEX_WARNING =
             "No task with such index found!" + "\n";
@@ -78,6 +81,9 @@ public class Duke {
                 break;
             case LIST_CMD:
                 executeListCommand(storedTasks);
+                break;
+            case DELETE_CMD:
+                executeDeleteCommand(storedTasks, commands);
                 break;
             default:
                 printIllegalCommandWarning();
@@ -154,7 +160,7 @@ public class Duke {
             storedTasks.get(taskNumber - 1).setDone();
             executeListCommand(storedTasks);
         } catch (IndexOutOfBoundsException | NumberFormatException e){
-            printIllegalDoneIndexWarning();
+            printIllegalTaskIndexWarning();
         }
     }
 
@@ -164,12 +170,24 @@ public class Duke {
             String todoTask = commands[1].trim();
             Todo t = new Todo(todoTask);
             storedTasks.add(t);
-            displayCurrentTask(storedTasks);
+            displayCurrentTask(storedTasks, storedTasks.size() - 1, true);
         } catch (IndexOutOfBoundsException e) {
             printSpecifyNameWarning();
         }
+    }
 
+    public static void executeDeleteCommand(ArrayList<Task> storedTasks, String[] commands) {
 
+        try {
+            String deleteIndex = commands[1].trim();
+            int taskNumber = Integer.parseInt(deleteIndex);
+            if(taskNumber <= storedTasks.size() && taskNumber > 0){
+                displayCurrentTask(storedTasks, taskNumber - 1, false);
+            }
+            storedTasks.remove(taskNumber - 1);
+        } catch (IndexOutOfBoundsException | NumberFormatException e){
+            printIllegalTaskIndexWarning();
+        }
     }
 
     public static void displayFormat(ArrayList<Task> storedTasks)
@@ -194,13 +212,19 @@ public class Duke {
         }
     }
 
-    public static void displayCurrentTask(ArrayList<Task> storedTasks) {
+    public static void displayCurrentTask(ArrayList<Task> storedTasks, Integer taskIndex, boolean isAdd) {
 
-        System.out.println(HORIZONTAL_LINE + MESSAGE_RECEIVED_MESSAGE);
+        if(isAdd) {
+            System.out.println(HORIZONTAL_LINE + ADD_MESSAGE_RECEIVED_MESSAGE);
+        } else {
+            System.out.println(HORIZONTAL_LINE + DELETE_MESSAGE_RECEIVED_MESSAGE);
+        }
+
         try {
-            System.out.println("\t" + storedTasks.get(storedTasks.size() - 1).toString());
-            System.out.println("Now you have " + storedTasks.size() + " task"
-                    + ((storedTasks.size() > 1) ? "s" : ""));
+            System.out.println("\t" + storedTasks.get(taskIndex).toString());
+            int taskNumber = (isAdd) ? storedTasks.size() : storedTasks.size() - 1;
+            System.out.println("Now you have " + taskNumber + " task"
+                    + ((taskNumber > 1) ? "s" : ""));
         } catch (IndexOutOfBoundsException e) {
             printNoTaskWarning();
         }
@@ -231,14 +255,14 @@ public class Duke {
 
         Deadline t = new Deadline(arrOfTaskAndTime[0], arrOfTaskAndTime[1]);
         storedTasks.add(t);
-        displayCurrentTask(storedTasks);
+        displayCurrentTask(storedTasks, storedTasks.size() - 1, true);
     }
 
     public static void addEvent(ArrayList<Task> storedTasks, String[] arrOfTaskAndTime) {
 
         Event t = new Event(arrOfTaskAndTime[0], arrOfTaskAndTime[1]);
         storedTasks.add(t);
-        displayCurrentTask(storedTasks);
+        displayCurrentTask(storedTasks, storedTasks.size() - 1, true);
     }
 
     public static void printIllegalCommandWarning() {
@@ -246,7 +270,7 @@ public class Duke {
         System.out.print(HORIZONTAL_LINE + ILLEGAL_CMD_WARNING + HORIZONTAL_LINE);
     }
 
-    public static void printIllegalDoneIndexWarning() {
+    public static void printIllegalTaskIndexWarning() {
 
         System.out.print(HORIZONTAL_LINE + ILLEGAL_DONE_INDEX_WARNING + HORIZONTAL_LINE);
     }
