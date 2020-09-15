@@ -16,6 +16,11 @@ public class Task {
         this.isDone = true;
     }
 
+    public void setUndone() {
+
+        this.isDone = false;
+    }
+
     //return tick or X symbols
     public String getStatusIcon() {
 
