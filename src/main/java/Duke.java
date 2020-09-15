@@ -58,6 +58,8 @@ public class Duke {
             "Please add \"/at\" in your command!" + "\n";
     public static final String ILLEGAL_IO_WARNING =
             "There is something wrong with your Input/output.";
+    public static final String NO_ELEMENT_WARNING =
+            "Sorry, there is no element.";
 
     public static final String FILE_PATHWAY =
             "data\\tasks.txt";
@@ -71,9 +73,9 @@ public class Duke {
         try {
             readFileContents(storedTasks);
         } catch (IOException e) {
-            System.out.println("oops");
+            System.out.println(ILLEGAL_IO_WARNING);
         } catch (NoSuchElementException e) {
-            System.out.println("lol no element");
+            System.out.println(NO_ELEMENT_WARNING);
         }
 
         Scanner in = new Scanner(System.in);
