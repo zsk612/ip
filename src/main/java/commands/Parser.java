@@ -1,17 +1,24 @@
-package src.main.java;
-
+package src.main.java.commands;
+import src.main.java.userInterface.Ui;
+import src.main.java.userInterface.WarningMessages;
 import src.main.java.constants.Constants;
+import src.main.java.exceptions.IllegalCommandException;
 import src.main.java.exceptions.NoTaskException;
-import src.main.java.exceptions.WrongCommandFormatException;
+import src.main.java.exceptions.WrongDeadlineFormatException;
+import src.main.java.exceptions.WrongEventFormatException;
+import src.main.java.tasktypes.TasksList;
 
 import java.io.IOException;
 
 public class Parser {
-    public static void handleCommand(String response, boolean isFromFile) throws IOException, NoTaskException, WrongCommandFormatException {
+
+    private static Command command;
+
+    public static void handleCommand(String response, boolean isFromFile) {
 
         String[] commands = response.trim().split(" ", 2);
 
-        Command command = null;
+
         switch (commands[0].trim()) {
             case Constants.DONE_CMD:
                 command = new DoneCommand(response);
@@ -38,11 +45,31 @@ public class Parser {
                 command = new DeleteCommand(response);
                 break;
             default:
-                WarningMessages.printIllegalCommandWarning();
+                command = new WrongCommand(response);
                 break;
         }
-        command.execute(Duke.tasksList, Duke.ui);
     }
+
+    public static void executeCommand(TasksList tasksList, Ui ui) {
+        try {
+            command.execute(tasksList);
+        } catch (WrongDeadlineFormatException e) {
+            WarningMessages.printWrongDeadlineCommandWarning();
+        } catch (WrongEventFormatException e) {
+            WarningMessages.printWrongEventCommandWarning();
+        } catch (IOException e) {
+            WarningMessages.printIOWarning(e);
+        } catch (NoTaskException e) {
+            WarningMessages.printNoTaskWarning();
+        } catch (IllegalCommandException e) {
+            WarningMessages.printIllegalCommandWarning();
+        } catch (IndexOutOfBoundsException | NumberFormatException e){
+            WarningMessages.printIllegalTaskIndexWarning();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
     public static String getCommand(char commandWord) {
 

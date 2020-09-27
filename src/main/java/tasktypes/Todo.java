@@ -2,7 +2,7 @@ package src.main.java.tasktypes;
 
 public class Todo extends Task {
 
-    protected boolean isDone;
+    protected final boolean isDone;
 
     public Todo(String description) {
 

@@ -1,2 +1,4 @@
-package src.main.java.exceptions;public class WrongEventFormatException {
+package src.main.java.exceptions;
+
+public class WrongEventFormatException extends Exception {
 }

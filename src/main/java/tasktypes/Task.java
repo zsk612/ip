@@ -2,7 +2,7 @@ package src.main.java.tasktypes;
 
 public class Task {
 
-    protected String description;
+    protected final String description;
     protected boolean isDone;
 
     public Task(String description) {

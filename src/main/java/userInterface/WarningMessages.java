@@ -1,4 +1,4 @@
-package src.main.java.uerInterface;
+package src.main.java.userInterface;
 
 import src.main.java.constants.Constants;
 

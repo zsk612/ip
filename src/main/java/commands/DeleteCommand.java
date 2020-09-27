@@ -1,5 +1,6 @@
-package src.main.java;
+package src.main.java.commands;
 
+import src.main.java.storage.Storage;
 import src.main.java.tasktypes.TasksList;
 
 import java.io.IOException;
@@ -10,9 +11,9 @@ public class DeleteCommand extends Command{
         super(response);
     }
 
-    public void execute(TasksList tasksList, Ui ui) throws IOException {
+    public void execute(TasksList tasksList) throws IOException {
         String[] commands = response.trim().split(" ", 2);
-        tasksList.deleteTask(commands);
+        TasksList.deleteTask(commands);
         Storage.updateFile();
     }
 }

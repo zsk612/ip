@@ -1,9 +1,9 @@
-package src.main.java;
+package src.main.java.storage;
 
 import src.main.java.commands.Parser;
-import src.main.java.exceptions.NoTaskException;
 import src.main.java.tasktypes.Task;
 import src.main.java.tasktypes.TasksList;
+import src.main.java.userInterface.WarningMessages;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -21,10 +21,10 @@ public class Storage {
     public static final String FILE_PATHWAY =
             "data/tasks.txt";
 
-    private static File f = new File(FILE_PATHWAY);
+    private static final File f = new File(FILE_PATHWAY);
 
     public static void initFile() {
-        
+
         boolean doesFileExist = f.exists();
 
         try {
@@ -42,7 +42,7 @@ public class Storage {
     }
 
     public static void readFileContents()
-            throws IOException, NoSuchElementException, NoTaskException, IndexOutOfBoundsException {
+            throws IOException, NoSuchElementException, IndexOutOfBoundsException {
 
         Path path = Paths.get(FILE_PATHWAY);
         Scanner s = new Scanner(path);
@@ -78,7 +78,7 @@ public class Storage {
 
     private static void appendToFile(String textToAppend) throws IOException {
 
-        FileWriter fw = new FileWriter(f, true);
+        FileWriter fw = new FileWriter(FILE_PATHWAY, true);
         fw.write(textToAppend);
         fw.close();
     }

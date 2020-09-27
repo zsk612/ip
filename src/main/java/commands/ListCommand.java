@@ -1,5 +1,6 @@
-package src.main.java;
+package src.main.java.commands;
 
+import src.main.java.userInterface.Ui;
 import src.main.java.exceptions.NoTaskException;
 import src.main.java.tasktypes.TasksList;
 
@@ -10,7 +11,7 @@ public class ListCommand extends Command {
         super(response);
     }
 
-    public void execute(TasksList tasksList, Ui ui) throws NoTaskException {
-        Duke.displayFormat();
+    public void execute(TasksList tasksList) throws NoTaskException {
+        Ui.displayFormat();
     }
 }

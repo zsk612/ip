@@ -1,9 +1,12 @@
-package src.main.java;
+package src.main.java.commands;
 
+import src.main.java.storage.Storage;
+import src.main.java.userInterface.Ui;
+import src.main.java.userInterface.WarningMessages;
 import src.main.java.constants.Constants;
 import src.main.java.exceptions.NoTaskNameException;
 import src.main.java.exceptions.NoTaskTimeException;
-import src.main.java.exceptions.WrongCommandFormatException;
+import src.main.java.exceptions.WrongDeadlineFormatException;
 import src.main.java.tasktypes.TasksList;
 
 import java.io.IOException;
@@ -15,9 +18,9 @@ public class AddDeadlineCommand extends Command{
         this.isFromFile = isFromFile;
     }
 
-    public void execute(TasksList tasksList, Ui ui) throws IOException, WrongCommandFormatException {
+    public void execute(TasksList tasksList) throws IOException, WrongDeadlineFormatException {
         if(!response.contains(Constants.DDL_CMD_SEPARATOR)) {
-            throw new WrongCommandFormatException();
+            throw new WrongDeadlineFormatException();
         }
 
         try {

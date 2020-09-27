@@ -1,4 +1,4 @@
-package src.main.java.uerInterface;
+package src.main.java.userInterface;
 
 import src.main.java.constants.Constants;
 import src.main.java.exceptions.NoTaskException;
@@ -16,7 +16,7 @@ public class Ui {
             "Hello! I'm Duke" + "\n"
             + "What can I do for you?" + "\n"
             + "Tell me your plan!" + "\n";
-    public static final String LIST_DISPLAY_MESSAGE =
+    public static final String LIST_MESSAGE =
             "Here are the tasks in your list:";
     public static final String ADD_MESSAGE_RECEIVED_MESSAGE =
             "Got it. I've added this task:";
@@ -24,11 +24,13 @@ public class Ui {
             "Got it. I've removed this task:";
     public static final String BYE_MESSAGE =
             "Bye. Hope to see you again soon!" + "\n";
+    public static final String CLEAR_MESSAGE = "I've cleared all the tasks!";
+    public static final String UNDONE_MESSAGE = "Oops! I've marked this task as Undone: ";
+    public static final String DONE_MESSAGE = "Nice! I've marked this task as done: ";
 
     public static String getCommandWords() {
         Scanner in = new Scanner(System.in);
-        String response = in.nextLine();
-        return response;
+        return in.nextLine();
     }
 
     public static void printExit() {
@@ -40,6 +42,20 @@ public class Ui {
         System.out.print(Constants.HORIZONTAL_LINE + GREETING_MESSAGE + Constants.HORIZONTAL_LINE);
     }
 
+    public static void printDoneMessage(int taskNumber) {
+        System.out.println(DONE_MESSAGE);
+        System.out.println("\t" + TasksList.tasks.get(taskNumber));
+    }
+
+    public static void printUndoneMessage(int taskNumber) {
+        System.out.println(UNDONE_MESSAGE);
+        System.out.println("\t" + TasksList.tasks.get(taskNumber));
+    }
+
+    public static void printClearMessage() {
+        System.out.println(CLEAR_MESSAGE);
+    }
+
     public static void displayFormat()
             throws NoTaskException {
 
@@ -47,7 +63,7 @@ public class Ui {
             throw new NoTaskException();
         }
 
-        System.out.println(Constants.HORIZONTAL_LINE + LIST_DISPLAY_MESSAGE);
+        System.out.println(Constants.HORIZONTAL_LINE + LIST_MESSAGE);
         displayTasks();
         System.out.print(Constants.HORIZONTAL_LINE);
     }
@@ -102,4 +118,6 @@ public class Ui {
 
         return new String[]{taskName, taskTime};
     }
+
+
 }
