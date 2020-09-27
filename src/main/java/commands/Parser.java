@@ -38,6 +38,9 @@ public class Parser {
             case Constants.EVENT_CMD:
                 command = new AddEventCommand(response, isFromFile);
                 break;
+            case Constants.FIND_CMD:
+                command = new FindCommand(response);
+                break;
             case Constants.LIST_CMD:
                 command = new ListCommand(response);
                 break;

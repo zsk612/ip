@@ -43,7 +43,7 @@ public class Duke {
         while(!response.equals(Constants.BYE_CMD)) {
             Parser.handleCommand(response, false);
             Parser.executeCommand(tasksList, ui);
-            System.out.println("What else?");
+            Ui.printNextCommandMessage();
             response = Ui.getCommandWords();
         }
     }
