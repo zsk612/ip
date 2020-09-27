@@ -21,6 +21,11 @@ public class Task {
         this.isDone = false;
     }
 
+    public String getDescription() {
+
+        return this.description;
+    }
+
     //return tick or X symbols
     public String getStatusIcon() {
 
