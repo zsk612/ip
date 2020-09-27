@@ -3,6 +3,7 @@ package src.main.java.tasktypes;
 import src.main.java.userInterface.Ui;
 import src.main.java.userInterface.WarningMessages;
 
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 
 public class TasksList {
@@ -29,19 +30,29 @@ public class TasksList {
 
     public static void addEventTask(String[] arrOfTaskAndTime, boolean isFromFile) {
 
-        Event t = new Event(arrOfTaskAndTime[0], arrOfTaskAndTime[1]);
-        tasks.add(t);
-        if (!isFromFile) {
-            Ui.displayCurrentTask(tasks.size() - 1, true);
+        try {
+            String date = Ui.extractDate(arrOfTaskAndTime[1]);
+            Event event = new Event(arrOfTaskAndTime[0], date);
+            tasks.add(event);
+            if (!isFromFile) {
+                Ui.displayCurrentTask(tasks.size() - 1, true);
+            }
+        } catch (DateTimeParseException e){
+            WarningMessages.printInvalidDateWarning();
         }
     }
 
     public static void addDeadlineTask(String[] arrOfTaskAndTime, boolean isFromFile) {
 
-        Deadline t = new Deadline(arrOfTaskAndTime[0], arrOfTaskAndTime[1]);
-        tasks.add(t);
-        if (!isFromFile) {
-            Ui.displayCurrentTask(tasks.size() - 1, true);
+        try {
+            String date = Ui.extractDate(arrOfTaskAndTime[1]);
+            Deadline ddl = new Deadline(arrOfTaskAndTime[0], date);
+            tasks.add(ddl);
+            if (!isFromFile) {
+                Ui.displayCurrentTask(tasks.size() - 1, true);
+            }
+        } catch (DateTimeParseException e){
+            System.out.println("you may have entered an invalid time");
         }
     }
 
