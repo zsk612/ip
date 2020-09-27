@@ -20,9 +20,11 @@ public class WarningMessages {
     public static final String WRONG_EVENT_COMMAND_WARNING =
             "Please add \"/at\" in your command!" + "\n";
     public static final String ILLEGAL_IO_WARNING =
-            "There is something wrong with your Input/output.";
+            "There is something wrong with your Input/output." + "\n";
     public static final String NO_ELEMENT_WARNING =
-            "Sorry, there is no element.";
+            "Sorry, there is no element." + "\n";
+    public static final String INVALID_DATE_WARNING =
+            "you may have entered an invalid date!" + "\n";
 
     public static void printIllegalCommandWarning() {
 
@@ -61,6 +63,11 @@ public class WarningMessages {
 
     public static void printIOWarning(IOException e) {
 
-        System.out.println(ILLEGAL_IO_WARNING + e.getMessage());
+        System.out.print(Constants.HORIZONTAL_LINE
+                + ILLEGAL_IO_WARNING + e.getMessage() + Constants.HORIZONTAL_LINE);
+    }
+
+    public static void printInvalidDateWarning() {
+        System.out.print(Constants.HORIZONTAL_LINE + INVALID_DATE_WARNING + Constants.HORIZONTAL_LINE);
     }
 }
