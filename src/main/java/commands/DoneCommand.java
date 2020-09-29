@@ -6,12 +6,19 @@ import src.main.java.userInterface.Ui;
 
 import java.io.IOException;
 
+/**
+ * Set selected task as done in Duke.
+ */
 public class DoneCommand extends Command {
 
+    /** Constructor for DoneCommand */
     public DoneCommand(String response) {
+
         super(response);
     }
 
+    /** Override execute() method. */
+    @Override
     public void execute(TasksList tasksList) {
 
         String[] commands = response.trim().split(" ", 2);

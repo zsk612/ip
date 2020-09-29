@@ -10,12 +10,18 @@ import src.main.java.userInterface.WarningMessages;
 import java.io.IOException;
 import java.util.NoSuchElementException;
 
+/**
+ * Entry point of the Duke application.
+ * Initializes the application and starts the interaction with the user.
+ */
 public class Duke {
 
+    /** The list of tasks stored in Duke.  */
     public static final TasksList tasksList = new TasksList();
-    public static final Ui ui = new Ui();
-    public static Storage storage = new Storage();
 
+    public static final Ui ui = new Ui();
+
+    /** Runs the program until termination.  */
     public static void main(String[] args) {
 
         start();
@@ -23,6 +29,7 @@ public class Duke {
         finish();
     }
 
+    /** Prints the welcome message, ets up the required objects, and loads up the data from the storage file. */
     public static void start() {
         Ui.printGreet();
 
@@ -38,8 +45,11 @@ public class Duke {
         }
     }
 
+    /** Reads the user command and executes it, until the user issues the bye command.  */
     public static void executeLoop() {
+
         String response = Ui.getCommandWords();
+
         while(!response.equals(Constants.BYE_CMD)) {
             Parser.handleCommand(response, false);
             Parser.executeCommand(tasksList, ui);
@@ -47,8 +57,9 @@ public class Duke {
             response = Ui.getCommandWords();
         }
     }
-
+    /** Prints the Goodbye message and exits. */
     public static void finish() {
+
         Ui.printExit();
     }
 }

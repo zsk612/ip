@@ -7,13 +7,19 @@ import src.main.java.userInterface.WarningMessages;
 
 import java.io.IOException;
 
-public class UndoneCommand extends Command{
+/**
+ * Set selected task as undone in Duke.
+ */
+public class UndoneCommand extends Command {
 
+    /** Constructor for UndoneCommand */
     public UndoneCommand(String response) {
 
         super(response);
     }
 
+    /** Override execute() method. */
+    @Override
     public void execute(TasksList tasksList) {
         String[] commands = response.trim().split(" ", 2);
         String UndoneIndex = commands[1].trim();

@@ -4,6 +4,9 @@ import src.main.java.constants.Constants;
 
 import java.io.IOException;
 
+/**
+ * container for all warning messages
+ */
 public class WarningMessages {
     public static final String ILLEGAL_DONE_INDEX_WARNING =
             "No task with such index found!" + "\n";

@@ -1,5 +1,8 @@
 package src.main.java.constants;
 
+/**
+ * Container for frequently used strings.
+ */
 public class Constants {
     public static final String HORIZONTAL_LINE = "---------------------" + "\n";
     public static final String DDL_CMD_SEPARATOR = "/by";
@@ -14,4 +17,5 @@ public class Constants {
     public static final String FIND_CMD = "find";
     public static final String LIST_CMD = "list";
     public static final String DELETE_CMD = "delete";
+    public static final String WRONG_CMD = "wrong";
 }

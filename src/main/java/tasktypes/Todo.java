@@ -1,13 +1,13 @@
 package src.main.java.tasktypes;
 
+/**
+ * Represents a Todo task.
+ */
 public class Todo extends Task {
-
-    protected final boolean isDone;
 
     public Todo(String description) {
 
         super(description);
-        this.isDone = false;
     }
 
     @Override

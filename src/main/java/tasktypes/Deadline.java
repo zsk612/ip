@@ -1,7 +1,11 @@
 package src.main.java.tasktypes;
 
+/**
+ * Represents a Deadline task.
+ */
 public class Deadline extends Task {
 
+    /** @param by date and time string */
     protected final String by;
 
     public Deadline(String description, String by) {

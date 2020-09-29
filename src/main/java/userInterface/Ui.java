@@ -107,7 +107,7 @@ public class Ui {
         }
         System.out.print(Constants.HORIZONTAL_LINE);
 
-        Storage.appendFile();
+        Storage.processAppendText();
     }
 
     public static String[] extractWords(String response)
