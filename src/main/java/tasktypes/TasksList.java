@@ -6,8 +6,10 @@ import src.main.java.userInterface.WarningMessages;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 
+/**
+ * Represents the list of tasks stored in Duke.
+ */
 public class TasksList {
-
 
     public static final ArrayList<Task> tasks = new ArrayList<>();
 
@@ -15,6 +17,11 @@ public class TasksList {
         return tasks.size();
     }
 
+    /**
+     * Adds a todo task in Duke.
+     * @param commands inputs for commands
+     * @param isFromFile boolean variable to show whether the commands are from .txt file or user input
+     */
     public void addTodoTask(String[] commands, boolean isFromFile) {
         try{
             String todoTask = commands[1].trim();
@@ -28,6 +35,11 @@ public class TasksList {
         }
     }
 
+    /**
+     * Adds an event task in Duke.
+     * @param arrOfTaskAndTime task name and time inputs for commands
+     * @param isFromFile boolean variable to show whether the commands are from .txt file or user input
+     */
     public static void addEventTask(String[] arrOfTaskAndTime, boolean isFromFile) {
 
         try {
@@ -42,6 +54,11 @@ public class TasksList {
         }
     }
 
+    /**
+     * Adds an event task in Duke.
+     * @param arrOfTaskAndTime task name and time inputs for commands
+     * @param isFromFile boolean variable to show whether the commands are from .txt file or user input
+     */
     public static void addDeadlineTask(String[] arrOfTaskAndTime, boolean isFromFile) {
 
         try {
@@ -56,6 +73,10 @@ public class TasksList {
         }
     }
 
+    /**
+     * Deletes a task from Duke.
+     * @param commands inputs for commands
+     */
     public static void deleteTask(String[] commands) {
         try{
             String deleteIndex = commands[1].trim();
@@ -69,6 +90,9 @@ public class TasksList {
         }
     }
 
+    /**
+     * Clears all tasks from Duke.
+     */
     public static void clearTask() {
         tasks.clear();
     }

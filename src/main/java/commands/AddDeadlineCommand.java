@@ -11,13 +11,22 @@ import src.main.java.tasktypes.TasksList;
 
 import java.io.IOException;
 
+/**
+ * Adds a Deadline task to Duke.
+ */
 public class AddDeadlineCommand extends Command{
 
+    /** Constructor for AddDeadlineCommand */
     public AddDeadlineCommand(String response, boolean isFromFile) {
         super(response);
         this.isFromFile = isFromFile;
     }
 
+    /** Override execute() method.
+     * @throws IOException if there is something wrong with inputting data into the .txt file
+     * @throws WrongDeadlineFormatException if the format for deadline command input is wrong
+     */
+    @Override
     public void execute(TasksList tasksList) throws IOException, WrongDeadlineFormatException {
         if(!response.contains(Constants.DDL_CMD_SEPARATOR)) {
             throw new WrongDeadlineFormatException();

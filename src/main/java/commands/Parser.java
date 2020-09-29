@@ -10,14 +10,21 @@ import src.main.java.tasktypes.TasksList;
 
 import java.io.IOException;
 
+/**
+ * Parses user input.
+ */
 public class Parser {
 
     private static Command command;
 
+    /**
+     * Parses the user input into command for execution.
+     * @param response user input for commands
+     * @param isFromFile a boolean parameter to show whether the command is read from the .txt file or user input.
+     */
     public static void handleCommand(String response, boolean isFromFile) {
 
         String[] commands = response.trim().split(" ", 2);
-
 
         switch (commands[0].trim()) {
             case Constants.DONE_CMD:
@@ -53,6 +60,11 @@ public class Parser {
         }
     }
 
+    /**
+     * Executes commands and catches exceptions
+     * @param tasksList TasksList to store tasks from user input and .txt file
+     * @param ui Ui for user interface
+     */
     public static void executeCommand(TasksList tasksList, Ui ui) {
         try {
             command.execute(tasksList);
@@ -73,7 +85,11 @@ public class Parser {
         }
     }
 
-
+    /**
+     * Gets the command keyword from .txt file data.
+     * @param commandWord character representing different types of task
+     * @return command keywords
+     */
     public static String getCommand(char commandWord) {
 
         switch (commandWord) {
@@ -84,10 +100,16 @@ public class Parser {
             case 'E':
                 return Constants.EVENT_CMD;
             default:
-                return "";
+                return Constants.WRONG_CMD;
         }
     }
 
+    /**
+     * reads tasks from .txt file data.
+     * @param input task strings in .txt file
+     * @param commandWord character representing different types of task
+     * @return task contents
+     */
     public static String getResponse(String input, char commandWord){
 
         switch (commandWord) {

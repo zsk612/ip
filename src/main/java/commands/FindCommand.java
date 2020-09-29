@@ -6,12 +6,17 @@ import src.main.java.userInterface.Ui;
 
 import java.util.ArrayList;
 
+/**
+ * Find tasks in Duke.
+ */
 public class FindCommand extends Command{
 
+    /** Constructor for FindCommand */
     public FindCommand(String response) {
         super(response);
     }
 
+    /** Override execute() method. */
     @Override
     public void execute(TasksList tasksList) {
         ArrayList<Task> foundTasks = new ArrayList<>();

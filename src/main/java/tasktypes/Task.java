@@ -1,5 +1,8 @@
 package src.main.java.tasktypes;
 
+/**
+ * Represents a task in general
+ */
 public class Task {
 
     protected final String description;
@@ -26,7 +29,7 @@ public class Task {
         return this.description;
     }
 
-    //return tick or X symbols
+    /** return tick or X symbols */
     public String getStatusIcon() {
 
         return (isDone ? "\u2713" : "\u2718");
