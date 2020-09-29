@@ -19,6 +19,9 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Text user interface of Duke.
+ */
 public class Ui {
 
     private static final String GREETING_MESSAGE =
@@ -46,6 +49,7 @@ public class Ui {
     public static final String NEXT_COMMAND_MESSAGE =
             "What else?" + "\n";
 
+    /** Gets commands from user input */
     public static String getCommandWords() {
         Scanner in = new Scanner(System.in);
         return in.nextLine();
@@ -57,10 +61,12 @@ public class Ui {
     }
 
     public static void printGreet() {
+
         System.out.print(Constants.HORIZONTAL_LINE + GREETING_MESSAGE + Constants.HORIZONTAL_LINE);
     }
 
     public static void printDoneMessage(int taskNumber) {
+
         System.out.println(DONE_MESSAGE);
         System.out.println("\t" + TasksList.tasks.get(taskNumber));
     }
@@ -76,6 +82,10 @@ public class Ui {
         System.out.print(Constants.HORIZONTAL_LINE + CLEAR_MESSAGE + Constants.HORIZONTAL_LINE);
     }
 
+    /**
+     * Displays task list with list messages.
+     * @throws NoTaskException if there is no task to be shown
+     */
     public static void displayFormat() throws NoTaskException {
 
         if (TasksList.tasks.isEmpty()) {
@@ -87,6 +97,9 @@ public class Ui {
         System.out.print(Constants.HORIZONTAL_LINE);
     }
 
+    /**
+     * Lists out all tasks
+     */
     private static void displayTasks() {
 
         int numOfInfo = 1;
@@ -97,6 +110,11 @@ public class Ui {
         }
     }
 
+    /**
+     * Displays current task that is processed.
+     * @param taskIndex the index of the task
+     * @param isAdd boolean variable to show whether the task is added or deleted
+     */
     public static void displayCurrentTask(Integer taskIndex, boolean isAdd) {
 
         if(isAdd) {
@@ -118,6 +136,13 @@ public class Ui {
         Storage.processAppendText();
     }
 
+    /**
+     * Extracts out task name and time from user input.
+     * @param response user input
+     * @return a string array containing task name and task time
+     * @throws NoTaskTimeException if there is no task time found
+     * @throws NoTaskNameException if there is no task name found
+     */
     public static String[] extractWords(String response)
             throws NoTaskTimeException, NoTaskNameException {
 
@@ -138,8 +163,10 @@ public class Ui {
         return new String[]{taskName, taskTime};
     }
 
-
-
+    /**
+     * Displays tasks found.
+     * @param foundTasks an array list of all matching tasks
+     */
     public static void displayMatchingTasks(ArrayList<Task> foundTasks) {
 
         if (foundTasks.isEmpty()) {
@@ -156,10 +183,21 @@ public class Ui {
     }
 
     public static void printNextCommandMessage() {
-        System.out.print(Constants.HORIZONTAL_LINE + NEXT_COMMAND_MESSAGE + Constants.HORIZONTAL_LINE);
 
+        System.out.print(Constants.HORIZONTAL_LINE + NEXT_COMMAND_MESSAGE + Constants.HORIZONTAL_LINE);
+    }
+
+    /**
+     * Extracts out
+     * @param dateString date string
+     * @return date in MMM dd yyyy if the user inputs date in YYYY-MM-DD format;
+     * else returns original string
+     * @throws DateTimeParseException if the date string input is not a valid date
+     */
     public static String extractDate(String dateString) throws DateTimeParseException {
-        Pattern pattern = Pattern.compile("\\d{4}-\\d{2}-\\d{2}"); // Looks for YYYY-MM-DD or YYYY-DD-MM formatting
+
+        /** Looks for YYYY-MM-DD formatting */
+        Pattern pattern = Pattern.compile("\\d{4}-\\d{2}-\\d{2}");
         Matcher matcher = pattern.matcher(dateString);
 
         boolean isValidDate = matcher.find();
@@ -169,6 +207,5 @@ public class Ui {
             return LocalDate.parse(match).format(DateTimeFormatter.ofPattern("MMM dd yyyy"));
         }
         return dateString;
-
     }
 }
