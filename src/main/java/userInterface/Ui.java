@@ -8,8 +8,16 @@ import src.main.java.storage.Storage;
 import src.main.java.tasktypes.Task;
 import src.main.java.tasktypes.TasksList;
 
+
 import java.util.ArrayList;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Ui {
 
@@ -131,6 +139,7 @@ public class Ui {
     }
 
 
+
     public static void displayMatchingTasks(ArrayList<Task> foundTasks) {
 
         if (foundTasks.isEmpty()) {
@@ -148,5 +157,18 @@ public class Ui {
 
     public static void printNextCommandMessage() {
         System.out.print(Constants.HORIZONTAL_LINE + NEXT_COMMAND_MESSAGE + Constants.HORIZONTAL_LINE);
+
+    public static String extractDate(String dateString) throws DateTimeParseException {
+        Pattern pattern = Pattern.compile("\\d{4}-\\d{2}-\\d{2}"); // Looks for YYYY-MM-DD or YYYY-DD-MM formatting
+        Matcher matcher = pattern.matcher(dateString);
+
+        boolean isValidDate = matcher.find();
+
+        if (isValidDate) {
+            String match = matcher.group();
+            return LocalDate.parse(match).format(DateTimeFormatter.ofPattern("MMM dd yyyy"));
+        }
+        return dateString;
+
     }
 }
