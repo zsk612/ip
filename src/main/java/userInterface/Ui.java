@@ -44,14 +44,14 @@ public class Ui {
     public void printDoneMessage(int taskNumber, TasksList tasksList) {
 
         String DONE_MESSAGE = "Nice! I've marked this task as done: ";
-        System.out.println(DONE_MESSAGE);
+        System.out.println(HORIZONTAL_LINE + DONE_MESSAGE);
         System.out.println("\t" + tasksList.tasks.get(taskNumber));
     }
 
     public void printUndoneMessage(int taskNumber, TasksList tasksList) {
 
-        String UNDONE_MESSAGE = "Oops! I've marked this task as Undone: ";
-        System.out.println(UNDONE_MESSAGE);
+        String UNDONE_MESSAGE = "Oops! I've marked this task as undone: ";
+        System.out.println(HORIZONTAL_LINE + UNDONE_MESSAGE);
         System.out.println("\t" + tasksList.tasks.get(taskNumber));
     }
 
