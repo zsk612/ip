@@ -18,14 +18,14 @@ public class AddEventCommand extends Command {
     public final String EVENT_CMD_SEPARATOR = "/at";
 
 
-    /** Constructor for AddEventCommand
+    /** Constructs AddEventCommand.
      * @param response user input string
      * */
     public AddEventCommand(String response) {
         super(response);
     }
 
-    /** Override execute() method.
+    /** Overrides execute() method.
      * @param tasksList TasksList that stores tasks
      * @param ui Ui that shows text user interface
      * @param warningMessages WarningMessages that show warning messages
@@ -43,7 +43,8 @@ public class AddEventCommand extends Command {
         try {
             String [] arrOfTaskAndTime = ui.extractWords(response);
             tasksList.addEventTask(arrOfTaskAndTime);
-            ui.displayCurrentTask(tasksList.tasks.size() - 1, tasksList, warningMessages, true);
+            ui.displayCurrentTask(tasksList.tasks.size() - 1,
+                    tasksList, warningMessages, true);
         } catch (NoTaskNameException e) {
             warningMessages.printSpecifyNameWarning();
         } catch (NoTaskTimeException | IndexOutOfBoundsException e) {

@@ -12,22 +12,22 @@ import java.io.IOException;
  */
 public class UndoneCommand extends Command {
 
-    /** Constructor for UndoneCommand
+    /** Constructs UndoneCommand.
      * @param response user input string
      */
     public UndoneCommand(String response) {
-
         super(response);
     }
 
-    /** Override execute() method.
+    /** Overrides execute() method.
      * @param tasksList TasksList that stores tasks
      * @param ui Ui that shows text user interface
      * @param warningMessages WarningMessages that show warning messages
      * @param storage Storage that reads and updates .txt file
      */
     @Override
-    public void execute(TasksList tasksList, Ui ui, WarningMessages warningMessages, Storage storage) {
+    public void execute(TasksList tasksList, Ui ui,
+                        WarningMessages warningMessages, Storage storage) {
         String[] commands = response.trim().split(" ", 2);
         String UndoneIndex = commands[1].trim();
         int taskNumber = Integer.parseInt(UndoneIndex) - 1;

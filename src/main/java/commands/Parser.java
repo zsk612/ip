@@ -81,7 +81,8 @@ public class Parser {
      * @param storage Storage that reads and updates .txt file
      * @return boolean isExit to show whether Duke can be terminated
      */
-    public boolean executeCommand(TasksList tasksList, Ui ui, WarningMessages warningMessages, Storage storage) {
+    public boolean executeCommand(TasksList tasksList, Ui ui,
+                                  WarningMessages warningMessages, Storage storage) {
         try {
             command.execute(tasksList, ui, warningMessages, storage);
             if (command.isExit) {

@@ -11,27 +11,28 @@ import java.util.ArrayList;
 /**
  * Find tasks in Duke.
  */
-public class FindCommand extends Command{
+public class FindCommand extends Command {
 
-    /** Constructor for FindCommand
+    /** Constructs FindCommand.
      * @param response user input string
      */
     public FindCommand(String response) {
         super(response);
     }
 
-    /** Override execute() method.
+    /** Overrides execute() method.
      * @param tasksList TasksList that stores tasks
      * @param ui Ui that shows text user interface
      * @param warningMessages WarningMessages that show warning messages
      * @param storage Storage that reads and updates .txt file
      */
     @Override
-    public void execute(TasksList tasksList, Ui ui, WarningMessages warningMessages, Storage storage) {
+    public void execute(TasksList tasksList, Ui ui,
+                        WarningMessages warningMessages, Storage storage) {
         ArrayList<Task> foundTasks = new ArrayList<>();
         String[] commands = response.trim().split(" ", 2);
-        for(Task task: tasksList.tasks) {
-            if(task.getDescription().contains(commands[1])) {
+        for (Task task: tasksList.tasks) {
+            if (task.getDescription().contains(commands[1])) {
                 foundTasks.add(task);
             }
         }

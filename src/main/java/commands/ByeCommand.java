@@ -10,22 +10,22 @@ import src.main.java.userInterface.WarningMessages;
  */
 public class ByeCommand extends Command {
 
-    /** Constructor for ByeCommand
+    /** Constructs ByeCommand
      * @param response user input string
      * */
     public ByeCommand(String response) {
-
         super(response);
     }
 
-    /** Override execute() method.
+    /** Overrides execute() method.
      * @param tasksList TasksList that stores tasks, which is not used here
      * @param ui Ui that shows text user interface, which is not used here
      * @param warningMessages WarningMessages that show warning messages, which is not used here
      * @param storage Storage that reads and updates .txt file, which is not used here
      */
     @Override
-    public void execute(TasksList tasksList, Ui ui, WarningMessages warningMessages, Storage storage) {
+    public void execute(TasksList tasksList, Ui ui,
+                        WarningMessages warningMessages, Storage storage) {
         isExit = true;
     }
 }

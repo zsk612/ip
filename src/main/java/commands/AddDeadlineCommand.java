@@ -18,14 +18,14 @@ public class AddDeadlineCommand extends Command {
     public final String DDL_CMD_SEPARATOR = "/by";
 
     /**
-     * Constructor for AddDeadlineCommand
+     * Constructs AddDeadlineCommand.
      * @param response user input string
      */
     public AddDeadlineCommand(String response) {
         super(response);
     }
 
-    /** Override execute() method.
+    /** Overrides execute() method.
      * @param tasksList TasksList that stores tasks
      * @param ui Ui that shows text user interface
      * @param warningMessages WarningMessages that show warning messages
@@ -36,8 +36,8 @@ public class AddDeadlineCommand extends Command {
      * if the format for deadline command input is wrong
      */
     @Override
-    public void execute(TasksList tasksList, Ui ui, WarningMessages warningMessages, Storage storage)
-            throws IOException, WrongDeadlineFormatException {
+    public void execute(TasksList tasksList, Ui ui, WarningMessages warningMessages,
+                        Storage storage) throws IOException, WrongDeadlineFormatException {
         if (!response.contains(DDL_CMD_SEPARATOR)) {
             throw new WrongDeadlineFormatException();
         }
@@ -45,7 +45,8 @@ public class AddDeadlineCommand extends Command {
         try {
             String [] arrOfTaskAndTime = ui.extractWords(response);
             tasksList.addDeadlineTask(arrOfTaskAndTime);
-            ui.displayCurrentTask(tasksList.tasks.size() - 1, tasksList, warningMessages, true);
+            ui.displayCurrentTask(tasksList.tasks.size() - 1,
+                    tasksList, warningMessages, true);
         } catch (NoTaskNameException e) {
             warningMessages.printSpecifyNameWarning();
         } catch (NoTaskTimeException | IndexOutOfBoundsException e) {

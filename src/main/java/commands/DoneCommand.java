@@ -13,22 +13,22 @@ import java.io.IOException;
 public class DoneCommand extends Command {
 
     /**
-     * Constructor for DoneCommand
+     * Constructs DoneCommand.
      * @param response user input string
      */
     public DoneCommand(String response) {
-
         super(response);
     }
 
-    /** Override execute() method.
+    /** Overrides execute() method.
      * @param tasksList TasksList that stores tasks
      * @param ui Ui that shows text user interface
      * @param warningMessages WarningMessages that show warning messages
      * @param storage Storage that reads and updates .txt file
      */
     @Override
-    public void execute(TasksList tasksList, Ui ui, WarningMessages warningMessages, Storage storage) {
+    public void execute(TasksList tasksList, Ui ui,
+                        WarningMessages warningMessages, Storage storage) {
 
         String[] commands = response.trim().split(" ", 2);
         String doneIndex = commands[1].trim();

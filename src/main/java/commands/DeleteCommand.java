@@ -12,7 +12,7 @@ import java.io.IOException;
  */
 public class DeleteCommand extends Command{
 
-    /** Constructor for DeleteCommand
+    /** Constructs DeleteCommand.
      * @param response user input string
      */
     public DeleteCommand(String response) {
@@ -20,7 +20,7 @@ public class DeleteCommand extends Command{
         super(response);
     }
 
-    /** Override execute() method.
+    /** Overrides execute() method.
      * @param tasksList TasksList that stores tasks
      * @param ui Ui that shows text user interface
      * @param warningMessages WarningMessages that show warning messages
@@ -28,8 +28,8 @@ public class DeleteCommand extends Command{
      * @throws IOException if there is something wrong with inputting data into the .txt file
      */
     @Override
-    public void execute(TasksList tasksList, Ui ui, WarningMessages warningMessages, Storage storage)
-            throws IOException {
+    public void execute(TasksList tasksList, Ui ui, WarningMessages warningMessages,
+                        Storage storage) throws IOException {
         String[] commands = response.trim().split(" ", 2);
         String deleteIndex = commands[1].trim();
         int taskNumber = Integer.parseInt(deleteIndex);

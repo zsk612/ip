@@ -11,13 +11,13 @@ import src.main.java.userInterface.WarningMessages;
  */
 public class WrongCommand extends Command {
 
-    /** Constructor for WrongCommand. */
+    /** Constructs WrongCommand. */
     public WrongCommand(String response) {
-
         super(response);
     }
 
-    /** Override execute() method.
+
+    /** Overrides execute() method.
      * @param tasksList TasksList that stores tasks, which is not used here
      * @param ui Ui that shows text user interface, which is not used here
      * @param warningMessages WarningMessages that show warning messages, which is not used here
@@ -25,7 +25,8 @@ public class WrongCommand extends Command {
      * @throws IllegalCommandException when the user inputs a wrong command
      */
     @Override
-    public void execute(TasksList tasksList, Ui ui, WarningMessages warningMessages, Storage storage)
+    public void execute(TasksList tasksList, Ui ui,
+                        WarningMessages warningMessages, Storage storage)
             throws IllegalCommandException {
         throw new IllegalCommandException();
     }

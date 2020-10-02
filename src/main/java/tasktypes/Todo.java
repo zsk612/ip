@@ -6,13 +6,14 @@ package src.main.java.tasktypes;
 public class Todo extends Task {
 
     public Todo(String description) {
-
         super(description);
     }
 
+    /**
+     * Overrides toString().
+     */
     @Override
     public String toString() {
-
         return "[T]" + super.toString();
     }
 }

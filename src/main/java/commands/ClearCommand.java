@@ -10,17 +10,16 @@ import java.io.IOException;
 /**
  * Clear all tasks in Duke.
  */
-public class ClearCommand extends Command{
+public class ClearCommand extends Command {
 
-    /** Constructor for ClearCommand
+    /** Constructs ClearCommand.
      * @param response user input string
      */
     public ClearCommand(String response) {
-
         super(response);
     }
 
-    /** Override execute() method.
+    /** Overrides execute() method.
      * @param tasksList TasksList that stores tasks
      * @param ui Ui that shows text user interface
      * @param warningMessages WarningMessages that show warning messages, which is not used here
@@ -29,8 +28,8 @@ public class ClearCommand extends Command{
      * if there is something wrong with inputting data into the .txt file
      */
     @Override
-    public void execute(TasksList tasksList, Ui ui, WarningMessages warningMessages, Storage storage)
-            throws IOException {
+    public void execute(TasksList tasksList, Ui ui, WarningMessages warningMessages,
+                        Storage storage) throws IOException {
         tasksList.clearTask();
         storage.updateFile(tasksList);
         ui.printClearMessage();

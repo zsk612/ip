@@ -3,7 +3,7 @@ package src.main.java.userInterface;
 import java.io.IOException;
 
 /**
- * container for all warning messages
+ * container for all warning messages.
  */
 public class WarningMessages {
     private final String HORIZONTAL_LINE = "---------------------" + "\n";

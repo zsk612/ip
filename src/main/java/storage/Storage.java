@@ -12,7 +12,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Arrays;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
@@ -23,7 +22,17 @@ public class Storage {
 
     public static final String DEADLINE_PREFIX = "deadline ";
     public static final String EVENT_PREFIX = "event ";
-    /** Default file path used. */
+    public static final String NEW_FILE_PATH_PROMPT = "file path: ";
+    public static final String EXISTED_FILE_PATH_PROMPT = "file existed path: ";
+    public static final String DDL_DELIM_IN_FILE = "(by:";
+    public static final String DDL_DELIM = "/by";
+    public static final String EVENT_DELIM_IN_FILE = "(at:";
+    public static final String EVENT_DELIM = "/at";
+    public static final String RIGHT_BRACKET = ")";
+
+    /**
+     * Default file path used.
+     */
     private final String FILE_PATHWAY =
             "data/tasks.txt";
 
@@ -32,13 +41,16 @@ public class Storage {
     private final Ui ui;
     private final WarningMessages warningMessages;
 
+    /**
+     * Constructs for Storage.
+     */
     public Storage() {
         warningMessages = new WarningMessages();
         ui = new Ui();
     }
 
     /**
-     * initializes the file and create a new file if there is no file.
+     * Initializes the file and create a new file if there is no file.
      */
     public void initFile() {
 
@@ -49,9 +61,9 @@ public class Storage {
             if (!doesFileExist) {
                 f.getParentFile().mkdirs();
                 f.createNewFile();
-                System.out.println("file path: " + f.getAbsolutePath());
+                System.out.println(NEW_FILE_PATH_PROMPT + f.getAbsolutePath());
             } else {
-                System.out.println("file existed path: " + f.getAbsolutePath());
+                System.out.println(EXISTED_FILE_PATH_PROMPT + f.getAbsolutePath());
             }
         } catch (IOException e) {
             warningMessages.printIOWarning(e);
@@ -59,14 +71,15 @@ public class Storage {
     }
 
     /**
-     * reads file content.
+     * Reads file content.
      * @throws IOException if it cannot read data from the file
      * @throws NoSuchElementException if the element requested does not exist
      * @throws IndexOutOfBoundsException if task index requested exceeds the limit
      * @param tasksList TasksList that stores tasks
      */
     public void readFileContents(TasksList tasksList)
-            throws IOException, NoSuchElementException, IndexOutOfBoundsException, NoTaskNameException, NoTaskTimeException {
+            throws IOException, NoSuchElementException, IndexOutOfBoundsException,
+            NoTaskNameException, NoTaskTimeException {
 
         Path path = Paths.get(FILE_PATHWAY);
         Scanner s = new Scanner(path);
@@ -75,19 +88,16 @@ public class Storage {
         while (s.hasNext()) {
 
             String targetLine = s.next();
-            System.out.println("line: " + targetLine);
             if (!targetLine.isEmpty()) {
                 char status = targetLine.charAt(4);
                 String response = getResponse(targetLine.split(" ", 2)[1],
                         targetLine.charAt(1));
-                System.out.println("response: " + response);
                 switch (targetLine.charAt(1)) {
                     case 'T':
                         tasksList.addTodoTask(response);
                         break;
                     case 'D':
                         tasksList.addDeadlineTask(ui.extractWords(DEADLINE_PREFIX + response));
-                        System.out.println("ddl: "+ Arrays.toString(ui.extractWords(response)));
                         break;
                     case 'E':
                         tasksList.addEventTask(ui.extractWords(EVENT_PREFIX + response));
@@ -105,7 +115,7 @@ public class Storage {
     }
 
     /**
-     * reads tasks from .txt file data.
+     * Reads tasks from .txt file data.
      * @param input task strings in .txt file
      * @param commandWord character representing different types of task
      * @return task contents
@@ -116,42 +126,18 @@ public class Storage {
             case 'T':
                 return input.trim();
             case 'D':
-                return input.trim().replace("(by:", "/by")
-                        .replace(")", "");
+                return input.trim().replace(DDL_DELIM_IN_FILE, DDL_DELIM)
+                        .replace(RIGHT_BRACKET, "");
             case 'E':
-                return input.trim().replace("(at:", "/at")
-                        .replace(")", "");
+                return input.trim().replace(EVENT_DELIM_IN_FILE, EVENT_DELIM)
+                        .replace(RIGHT_BRACKET, "");
             default:
-                return "";
+                return input;
         }
     }
 
-//    /**
-//     * processes the text appended to file and catches IOException.
-//     */
-//    public void processAppendText() {
-//
-//        try {
-//            appendToFile(String.format("%s\n", tasksList.tasks.get(tasksList.tasks.size() - 1).toString()));
-//        } catch (IOException e) {
-//            warningMessages.printIOWarning(e);
-//        }
-//    }
-//
-//    /**
-//     * appends text to the file when adding new tasks.
-//     * @param textToAppend string appended to file
-//     * @throws IOException if the file cannot by overwritten
-//     */
-//    private void appendToFile(String textToAppend) throws IOException {
-//
-//        FileWriter fw = new FileWriter(FILE_PATHWAY, true);
-//        fw.write(textToAppend);
-//        fw.close();
-//    }
-
     /**
-     * updates file when changing existing tasks.
+     * Updates file when changing existing tasks.
      * @param tasksList TasksList that stores tasks
      */
     public void updateFile(TasksList tasksList) throws IOException {

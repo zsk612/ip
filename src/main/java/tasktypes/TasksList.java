@@ -21,7 +21,7 @@ public class TasksList {
         tasks = new ArrayList<>();
     }
 
-    public int size(){
+    public int size() {
         return tasks.size();
     }
 
@@ -30,7 +30,7 @@ public class TasksList {
      * @param taskName inputs for task name
      */
     public void addTodoTask(String taskName) {
-        try{
+        try {
             String todoTask = taskName.trim();
             Todo t = new Todo(todoTask);
             tasks.add(t);
@@ -87,5 +87,4 @@ public class TasksList {
     public void clearTask() {
         tasks.clear();
     }
-
 }

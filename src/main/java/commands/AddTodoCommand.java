@@ -12,7 +12,7 @@ import java.io.IOException;
  */
 public class AddTodoCommand extends Command {
 
-    /** Constructor for AddTodoCommand
+    /** Constructs AddTodoCommand.
      * @param response user input string
      */
     public AddTodoCommand(String response) {
@@ -20,7 +20,7 @@ public class AddTodoCommand extends Command {
         super(response);
     }
 
-    /** Override execute() method.
+    /** Overrides execute() method.
      * @param tasksList TasksList that stores tasks
      * @param ui Ui that shows text user interface
      * @param warningMessages WarningMessages that show warning messages
@@ -29,11 +29,12 @@ public class AddTodoCommand extends Command {
      * if there is something wrong with inputting data into the .txt file
      */
     @Override
-    public void execute(TasksList tasksList, Ui ui, WarningMessages warningMessages, Storage storage)
-            throws IOException {
+    public void execute(TasksList tasksList, Ui ui, WarningMessages warningMessages,
+                        Storage storage) throws IOException {
         String[] commands = response.trim().split(" ", 2);
         tasksList.addTodoTask(commands[1]);
-        ui.displayCurrentTask(tasksList.tasks.size() - 1, tasksList, warningMessages, true);
+        ui.displayCurrentTask(tasksList.tasks.size() - 1,
+                tasksList, warningMessages, true);
         storage.updateFile(tasksList);
     }
 }

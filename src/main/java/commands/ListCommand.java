@@ -11,23 +11,22 @@ import src.main.java.userInterface.WarningMessages;
  */
 public class ListCommand extends Command {
 
-    /** Constructor for ListCommand
+    /** Constructs ListCommand.
      * @param response user input string
      */
     public ListCommand(String response) {
-
         super(response);
     }
 
-    /** Override execute() method.
+    /** Overrides execute() method.
      * @param tasksList TasksList that stores tasks
      * @param ui Ui that shows text user interface
      * @param warningMessages WarningMessages that show warning messages, which is not used here
      * @param storage Storage that reads and updates .txt file, which is not used here
      * */
     @Override
-    public void execute(TasksList tasksList, Ui ui, WarningMessages warningMessages, Storage storage)
-            throws NoTaskException {
+    public void execute(TasksList tasksList, Ui ui, WarningMessages warningMessages,
+                        Storage storage) throws NoTaskException {
         ui.displayFormat(tasksList);
     }
 }

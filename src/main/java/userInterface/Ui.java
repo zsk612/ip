@@ -78,7 +78,7 @@ public class Ui {
     }
 
     /**
-     * Lists out all tasks
+     * Lists out all tasks.
      */
     private void displayTasks(TasksList tasksList) {
 

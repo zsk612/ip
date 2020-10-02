@@ -13,16 +13,12 @@ public abstract class Command {
     protected boolean isExit;
     protected final String response;
 
-    /** Constructor for abstract class Command
+    /** Constructs abstract class Command
      * @param response user command input
      */
     public Command(String response) {
         this.response = response;
         this.isExit = false;
-    }
-
-    public boolean getExitFlag() {
-        return this.isExit;
     }
 
     /**
@@ -31,8 +27,8 @@ public abstract class Command {
      * @param ui Ui that shows text user interface
      * @param warningMessages WarningMessages that show warning messages
      * @param storage Storage that reads and updates .txt file
-     * @throws Exception
+     * @throws Exception for general exceptions
      */
-    public abstract void execute(TasksList tasksList, Ui ui, WarningMessages warningMessages, Storage storage)
-            throws Exception;
+    public abstract void execute(TasksList tasksList, Ui ui, WarningMessages warningMessages,
+                                 Storage storage) throws Exception;
 }
