@@ -1,76 +1,75 @@
 package src.main.java.userInterface;
 
-import src.main.java.constants.Constants;
-
 import java.io.IOException;
 
 /**
  * container for all warning messages
  */
 public class WarningMessages {
-    public static final String ILLEGAL_DONE_INDEX_WARNING =
+    private final String HORIZONTAL_LINE = "---------------------" + "\n";
+    public final String ILLEGAL_DONE_INDEX_WARNING =
             "No task with such index found!" + "\n";
-    public static final String NO_TASK_WARNING =
+    public final String NO_TASK_WARNING =
             "There is no task yet. Please add your task!" + "\n";
-    public static final String SPECIFY_TASK_NAME_WARNING =
+    public final String SPECIFY_TASK_NAME_WARNING =
             "Please specify task!" + "\n";
-    public static final String SPECIFY_TASK_TIME_WARNING = "" +
+    public final String SPECIFY_TASK_TIME_WARNING = "" +
             "Please specify time!" + "\n";
-    public static final String ILLEGAL_CMD_WARNING =
+    public final String ILLEGAL_CMD_WARNING =
             "No such command! Please try again!" + "\n";
-    public static final String WRONG_DDL_COMMAND_WARNING =
+    public final String WRONG_DDL_COMMAND_WARNING =
             "Please add \"/by\" in your command!" + "\n";
-    public static final String WRONG_EVENT_COMMAND_WARNING =
+    public final String WRONG_EVENT_COMMAND_WARNING =
             "Please add \"/at\" in your command!" + "\n";
-    public static final String ILLEGAL_IO_WARNING =
+    public final String ILLEGAL_IO_WARNING =
             "There is something wrong with your Input/output." + "\n";
-    public static final String NO_ELEMENT_WARNING =
+    public final String NO_ELEMENT_WARNING =
             "Sorry, there is no element." + "\n";
-    public static final String INVALID_DATE_WARNING =
+    public final String INVALID_DATE_WARNING =
             "you may have entered an invalid date!" + "\n";
 
-    public static void printIllegalCommandWarning() {
+    public void printIllegalCommandWarning() {
 
-        System.out.print(Constants.HORIZONTAL_LINE + ILLEGAL_CMD_WARNING + Constants.HORIZONTAL_LINE);
+        System.out.print(HORIZONTAL_LINE + ILLEGAL_CMD_WARNING + HORIZONTAL_LINE);
     }
 
-    public static void printIllegalTaskIndexWarning() {
+    public void printIllegalTaskIndexWarning() {
 
-        System.out.print(Constants.HORIZONTAL_LINE + ILLEGAL_DONE_INDEX_WARNING + Constants.HORIZONTAL_LINE);
+        System.out.print(HORIZONTAL_LINE + ILLEGAL_DONE_INDEX_WARNING + HORIZONTAL_LINE);
     }
 
-    public static void printNoTaskWarning() {
+    public void printNoTaskWarning() {
 
-        System.out.print(Constants.HORIZONTAL_LINE + NO_TASK_WARNING + Constants.HORIZONTAL_LINE);
+        System.out.print(HORIZONTAL_LINE + NO_TASK_WARNING + HORIZONTAL_LINE);
     }
 
-    public static void printWrongEventCommandWarning() {
+    public void printWrongEventCommandWarning() {
 
-        System.out.print(Constants.HORIZONTAL_LINE + WRONG_EVENT_COMMAND_WARNING + Constants.HORIZONTAL_LINE);
+        System.out.print(HORIZONTAL_LINE + WRONG_EVENT_COMMAND_WARNING + HORIZONTAL_LINE);
     }
 
-    public static void printWrongDeadlineCommandWarning() {
+    public void printWrongDeadlineCommandWarning() {
 
-        System.out.print(Constants.HORIZONTAL_LINE + WRONG_DDL_COMMAND_WARNING + Constants.HORIZONTAL_LINE);
+        System.out.print(HORIZONTAL_LINE + WRONG_DDL_COMMAND_WARNING + HORIZONTAL_LINE);
     }
 
-    public static void printSpecifyTimeWarning() {
+    public void printSpecifyTimeWarning() {
 
-        System.out.print(Constants.HORIZONTAL_LINE + SPECIFY_TASK_TIME_WARNING + Constants.HORIZONTAL_LINE);
+        System.out.print(HORIZONTAL_LINE + SPECIFY_TASK_TIME_WARNING + HORIZONTAL_LINE);
     }
 
-    public static void printSpecifyNameWarning() {
+    public void printSpecifyNameWarning() {
 
-        System.out.print(Constants.HORIZONTAL_LINE + SPECIFY_TASK_NAME_WARNING + Constants.HORIZONTAL_LINE);
+        System.out.print(HORIZONTAL_LINE + SPECIFY_TASK_NAME_WARNING + HORIZONTAL_LINE);
     }
 
-    public static void printIOWarning(IOException e) {
+    public void printIOWarning(IOException e) {
 
-        System.out.print(Constants.HORIZONTAL_LINE
-                + ILLEGAL_IO_WARNING + e.getMessage() + Constants.HORIZONTAL_LINE);
+        System.out.print(HORIZONTAL_LINE
+                + ILLEGAL_IO_WARNING + e.getMessage() + HORIZONTAL_LINE);
     }
 
-    public static void printInvalidDateWarning() {
-        System.out.print(Constants.HORIZONTAL_LINE + INVALID_DATE_WARNING + Constants.HORIZONTAL_LINE);
+    public void printInvalidDateWarning() {
+        System.out.print(HORIZONTAL_LINE + INVALID_DATE_WARNING + HORIZONTAL_LINE);
     }
 }

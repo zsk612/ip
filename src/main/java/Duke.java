@@ -1,7 +1,8 @@
 package src.main.java;
 
 import src.main.java.commands.Parser;
-import src.main.java.constants.Constants;
+import src.main.java.exceptions.NoTaskNameException;
+import src.main.java.exceptions.NoTaskTimeException;
 import src.main.java.storage.Storage;
 import src.main.java.tasktypes.TasksList;
 import src.main.java.userInterface.Ui;
@@ -15,51 +16,72 @@ import java.util.NoSuchElementException;
  * Initializes the application and starts the interaction with the user.
  */
 public class Duke {
+    private final Ui ui;
+    private final Storage storage;
+    private final Parser parser;
+    private final TasksList tasksList;
+    private final WarningMessages warningMessages;
 
-    /** The list of tasks stored in Duke.  */
-    public static final TasksList tasksList = new TasksList();
+    /**
+     * Constructs Duke and initializes ui, storage, tasksList and warningMessages.
+     */
+    public Duke() {
+        ui = new Ui();
+        storage = new Storage();
+        parser = new Parser();
+        tasksList = new TasksList();
+        warningMessages = new WarningMessages();
+    }
 
-    public static final Ui ui = new Ui();
+    public static void main(String[] args) {
+        new Duke().run();
+    }
 
     /** Runs the program until termination.  */
-    public static void main(String[] args) {
-
+    public void run() {
         start();
         executeLoop();
         finish();
     }
 
-    /** Prints the welcome message, ets up the required objects, and loads up the data from the storage file. */
-    public static void start() {
-        Ui.printGreet();
+    /** Prints the welcome message, sets up the required objects, and loads up the data from the storage file. */
+    public void start() {
+        ui.printGreet();
 
         try {
-            Storage.initFile();
-            Storage.readFileContents();
+            storage.initFile();
+            storage.readFileContents(tasksList);
         } catch (IOException e) {
-            System.out.println(WarningMessages.ILLEGAL_IO_WARNING);
+            System.out.println(warningMessages.ILLEGAL_IO_WARNING);
         } catch (NoSuchElementException e) {
-            System.out.println(WarningMessages.NO_ELEMENT_WARNING);
+            System.out.println(warningMessages.NO_ELEMENT_WARNING);
         } catch (IndexOutOfBoundsException e) {
-            System.out.println(WarningMessages.ILLEGAL_DONE_INDEX_WARNING);
+            System.out.println(warningMessages.ILLEGAL_DONE_INDEX_WARNING);
+        } catch (NoTaskNameException e) {
+            System.out.println(warningMessages.SPECIFY_TASK_NAME_WARNING);
+        } catch (NoTaskTimeException e) {
+            System.out.println(warningMessages.SPECIFY_TASK_TIME_WARNING);
         }
     }
 
     /** Reads the user command and executes it, until the user issues the bye command.  */
-    public static void executeLoop() {
+    public void executeLoop() {
 
-        String response = Ui.getCommandWords();
-
-        while(!response.equals(Constants.BYE_CMD)) {
-            Parser.handleCommand(response, false);
-            Parser.executeCommand(tasksList, ui);
-            Ui.printNextCommandMessage();
-            response = Ui.getCommandWords();
+        String response = ui.getCommandWords();
+        while (true) {
+            parser.handleCommand(response);
+            boolean isExit = parser.executeCommand(tasksList, ui, warningMessages, storage);
+            if(isExit) {
+                break;
+            } else {
+                ui.printNextCommandMessage();
+                response = ui.getCommandWords();
+            }
         }
     }
     /** Prints the Goodbye message and exits. */
-    public static void finish() {
+    public void finish() {
 
-        Ui.printExit();
+        ui.printExit();
     }
 }

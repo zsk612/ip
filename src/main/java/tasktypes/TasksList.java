@@ -11,7 +11,15 @@ import java.util.ArrayList;
  */
 public class TasksList {
 
-    public static final ArrayList<Task> tasks = new ArrayList<>();
+    private final Ui ui;
+    private final WarningMessages warningMessages;
+    public final ArrayList<Task> tasks;
+
+    public TasksList() {
+        ui = new Ui();
+        warningMessages = new WarningMessages();
+        tasks = new ArrayList<>();
+    }
 
     public int size(){
         return tasks.size();
@@ -19,55 +27,43 @@ public class TasksList {
 
     /**
      * Adds a todo task in Duke.
-     * @param commands inputs for commands
-     * @param isFromFile boolean variable to show whether the commands are from .txt file or user input
+     * @param taskName inputs for task name
      */
-    public void addTodoTask(String[] commands, boolean isFromFile) {
+    public void addTodoTask(String taskName) {
         try{
-            String todoTask = commands[1].trim();
+            String todoTask = taskName.trim();
             Todo t = new Todo(todoTask);
             tasks.add(t);
-            if (!isFromFile) {
-                Ui.displayCurrentTask(tasks.size() - 1, true);
-            }
         } catch (IndexOutOfBoundsException | NumberFormatException e){
-            WarningMessages.printSpecifyNameWarning();
+            warningMessages.printSpecifyNameWarning();
         }
     }
 
     /**
      * Adds an event task in Duke.
      * @param arrOfTaskAndTime task name and time inputs for commands
-     * @param isFromFile boolean variable to show whether the commands are from .txt file or user input
      */
-    public static void addEventTask(String[] arrOfTaskAndTime, boolean isFromFile) {
+    public void addEventTask(String[] arrOfTaskAndTime) {
 
         try {
-            String date = Ui.extractDate(arrOfTaskAndTime[1]);
+            String date = ui.extractDate(arrOfTaskAndTime[1]);
             Event event = new Event(arrOfTaskAndTime[0], date);
             tasks.add(event);
-            if (!isFromFile) {
-                Ui.displayCurrentTask(tasks.size() - 1, true);
-            }
         } catch (DateTimeParseException e){
-            WarningMessages.printInvalidDateWarning();
+            warningMessages.printInvalidDateWarning();
         }
     }
 
     /**
      * Adds an event task in Duke.
      * @param arrOfTaskAndTime task name and time inputs for commands
-     * @param isFromFile boolean variable to show whether the commands are from .txt file or user input
      */
-    public static void addDeadlineTask(String[] arrOfTaskAndTime, boolean isFromFile) {
+    public void addDeadlineTask(String[] arrOfTaskAndTime) {
 
         try {
-            String date = Ui.extractDate(arrOfTaskAndTime[1]);
+            String date = ui.extractDate(arrOfTaskAndTime[1]);
             Deadline ddl = new Deadline(arrOfTaskAndTime[0], date);
             tasks.add(ddl);
-            if (!isFromFile) {
-                Ui.displayCurrentTask(tasks.size() - 1, true);
-            }
         } catch (DateTimeParseException e){
             System.out.println("you may have entered an invalid time");
         }
@@ -75,25 +71,20 @@ public class TasksList {
 
     /**
      * Deletes a task from Duke.
-     * @param commands inputs for commands
+     * @param taskNumber deleted task index
      */
-    public static void deleteTask(String[] commands) {
+    public void deleteTask(int taskNumber) {
         try{
-            String deleteIndex = commands[1].trim();
-            int taskNumber = Integer.parseInt(deleteIndex);
-            if(taskNumber <= tasks.size() && taskNumber > 0){
-                Ui.displayCurrentTask(taskNumber - 1, false);
-            }
-            tasks.remove(taskNumber - 1);
-        } catch (IndexOutOfBoundsException | NumberFormatException e){
-            WarningMessages.printIllegalTaskIndexWarning();
+            tasks.remove(taskNumber);
+        } catch (IndexOutOfBoundsException | NumberFormatException e) {
+            warningMessages.printIllegalTaskIndexWarning();
         }
     }
 
     /**
      * Clears all tasks from Duke.
      */
-    public static void clearTask() {
+    public void clearTask() {
         tasks.clear();
     }
 

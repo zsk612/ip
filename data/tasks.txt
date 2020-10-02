@@ -1,0 +1,6 @@
+[T][✓] go
+[D][✘] French homework (by: next Tuesday)
+[T][✓] aeffe
+[E][✘] adf (at: fafea)
+[T][✘] afdef
+[E][✘] feaea (at: afea)

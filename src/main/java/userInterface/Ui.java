@@ -1,20 +1,15 @@
 package src.main.java.userInterface;
 
-import src.main.java.constants.Constants;
 import src.main.java.exceptions.NoTaskException;
 import src.main.java.exceptions.NoTaskNameException;
 import src.main.java.exceptions.NoTaskTimeException;
-import src.main.java.storage.Storage;
 import src.main.java.tasktypes.Task;
 import src.main.java.tasktypes.TasksList;
-
-
-import java.util.ArrayList;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -24,87 +19,72 @@ import java.util.regex.Pattern;
  */
 public class Ui {
 
-    private static final String GREETING_MESSAGE =
-            "Hello! I'm Duke" + "\n"
-            + "What can I do for you?" + "\n"
-            + "Tell me your plan!" + "\n";
-    private static final String LIST_MESSAGE =
-            "Here are the tasks in your list:";
-    private static final String ADD_MESSAGE_RECEIVED_MESSAGE =
-            "Got it. I've added this task:";
-    private static final String DELETE_MESSAGE_RECEIVED_MESSAGE =
-            "Got it. I've removed this task:";
-    private static final String BYE_MESSAGE =
-            "Bye. Hope to see you again soon!" + "\n";
-    private static final String CLEAR_MESSAGE =
-            "I've cleared all the tasks!" + "\n";
-    private static final String UNDONE_MESSAGE =
-            "Oops! I've marked this task as Undone: ";
-    private static final String DONE_MESSAGE =
-            "Nice! I've marked this task as done: ";
-    private static final String FIND_MESSAGE =
-            "Here are the matching tasks in your list:";
-    public static final String NO_MATCH_MESSAGE =
-            "There is no matching task." + "\n";
-    public static final String NEXT_COMMAND_MESSAGE =
-            "What else?" + "\n";
+    private final String HORIZONTAL_LINE = "---------------------" + "\n";
 
     /** Gets commands from user input */
-    public static String getCommandWords() {
+    public String getCommandWords() {
         Scanner in = new Scanner(System.in);
         return in.nextLine();
     }
 
-    public static void printExit() {
+    public void printExit() {
 
-        System.out.print(Constants.HORIZONTAL_LINE + BYE_MESSAGE + Constants.HORIZONTAL_LINE);
+        String BYE_MESSAGE = "Bye. Hope to see you again soon!" + "\n";
+        System.out.print(HORIZONTAL_LINE + BYE_MESSAGE + HORIZONTAL_LINE);
     }
 
-    public static void printGreet() {
+    public void printGreet() {
 
-        System.out.print(Constants.HORIZONTAL_LINE + GREETING_MESSAGE + Constants.HORIZONTAL_LINE);
+        String GREETING_MESSAGE = "Hello! I'm Duke" + "\n"
+                + "What can I do for you?" + "\n"
+                + "Tell me your plan!" + "\n";
+        System.out.print(HORIZONTAL_LINE + GREETING_MESSAGE + HORIZONTAL_LINE);
     }
 
-    public static void printDoneMessage(int taskNumber) {
+    public void printDoneMessage(int taskNumber, TasksList tasksList) {
 
+        String DONE_MESSAGE = "Nice! I've marked this task as done: ";
         System.out.println(DONE_MESSAGE);
-        System.out.println("\t" + TasksList.tasks.get(taskNumber));
+        System.out.println("\t" + tasksList.tasks.get(taskNumber));
     }
 
-    public static void printUndoneMessage(int taskNumber) {
+    public void printUndoneMessage(int taskNumber, TasksList tasksList) {
 
+        String UNDONE_MESSAGE = "Oops! I've marked this task as Undone: ";
         System.out.println(UNDONE_MESSAGE);
-        System.out.println("\t" + TasksList.tasks.get(taskNumber));
+        System.out.println("\t" + tasksList.tasks.get(taskNumber));
     }
 
-    public static void printClearMessage() {
+    public void printClearMessage() {
 
-        System.out.print(Constants.HORIZONTAL_LINE + CLEAR_MESSAGE + Constants.HORIZONTAL_LINE);
+        String CLEAR_MESSAGE = "I've cleared all the tasks!" + "\n";
+        System.out.print(HORIZONTAL_LINE + CLEAR_MESSAGE + HORIZONTAL_LINE);
     }
 
     /**
      * Displays task list with list messages.
      * @throws NoTaskException if there is no task to be shown
      */
-    public static void displayFormat() throws NoTaskException {
+    public void displayFormat(TasksList tasksList) throws NoTaskException {
 
-        if (TasksList.tasks.isEmpty()) {
+        if (tasksList.tasks.isEmpty()) {
             throw new NoTaskException();
         }
 
-        System.out.println(Constants.HORIZONTAL_LINE + LIST_MESSAGE);
-        displayTasks();
-        System.out.print(Constants.HORIZONTAL_LINE);
+        String LIST_MESSAGE = "Here are the tasks in your list:";
+        System.out.println(HORIZONTAL_LINE + LIST_MESSAGE);
+        displayTasks(tasksList);
+        System.out.print(HORIZONTAL_LINE);
     }
 
     /**
      * Lists out all tasks
      */
-    private static void displayTasks() {
+    private void displayTasks(TasksList tasksList) {
 
         int numOfInfo = 1;
 
-        for (Task storedTask : TasksList.tasks) {
+        for (Task storedTask : tasksList.tasks) {
             System.out.println(numOfInfo + ". " + storedTask.toString());
             numOfInfo++;
         }
@@ -115,25 +95,26 @@ public class Ui {
      * @param taskIndex the index of the task
      * @param isAdd boolean variable to show whether the task is added or deleted
      */
-    public static void displayCurrentTask(Integer taskIndex, boolean isAdd) {
+    public void displayCurrentTask(Integer taskIndex, TasksList tasksList,
+                                   WarningMessages warningMessages, boolean isAdd) {
 
         if(isAdd) {
-            System.out.println(Constants.HORIZONTAL_LINE + ADD_MESSAGE_RECEIVED_MESSAGE);
+            String ADD_MESSAGE_RECEIVED_MESSAGE = "Got it. I've added this task:";
+            System.out.println(HORIZONTAL_LINE + ADD_MESSAGE_RECEIVED_MESSAGE);
         } else {
-            System.out.println(Constants.HORIZONTAL_LINE + DELETE_MESSAGE_RECEIVED_MESSAGE);
+            String DELETE_MESSAGE_RECEIVED_MESSAGE = "Got it. I've removed this task:";
+            System.out.println(HORIZONTAL_LINE + DELETE_MESSAGE_RECEIVED_MESSAGE);
         }
 
         try {
-            System.out.println("\t" + TasksList.tasks.get(taskIndex).toString());
-            int taskNumber = (isAdd) ? TasksList.tasks.size() : TasksList.tasks.size() - 1;
+            System.out.println("\t" + tasksList.tasks.get(taskIndex).toString());
+            int taskNumber = (isAdd) ? tasksList.tasks.size() : tasksList.tasks.size() - 1;
             System.out.println("Now you have " + taskNumber + " task"
                     + ((taskNumber > 1) ? "s" : ""));
         } catch (IndexOutOfBoundsException e) {
-            WarningMessages.printNoTaskWarning();
+            warningMessages.printNoTaskWarning();
         }
-        System.out.print(Constants.HORIZONTAL_LINE);
-
-        Storage.processAppendText();
+        System.out.print(HORIZONTAL_LINE);
     }
 
     /**
@@ -143,7 +124,7 @@ public class Ui {
      * @throws NoTaskTimeException if there is no task time found
      * @throws NoTaskNameException if there is no task name found
      */
-    public static String[] extractWords(String response)
+    public String[] extractWords(String response)
             throws NoTaskTimeException, NoTaskNameException {
 
         int endIndexOfTask = (response.contains("/")) ?
@@ -167,36 +148,37 @@ public class Ui {
      * Displays tasks found.
      * @param foundTasks an array list of all matching tasks
      */
-    public static void displayMatchingTasks(ArrayList<Task> foundTasks) {
+    public void displayMatchingTasks(ArrayList<Task> foundTasks) {
 
         if (foundTasks.isEmpty()) {
-            System.out.print(Constants.HORIZONTAL_LINE + NO_MATCH_MESSAGE + Constants.HORIZONTAL_LINE);
+            String NO_MATCH_MESSAGE = "There is no matching task." + "\n";
+            System.out.print(HORIZONTAL_LINE + NO_MATCH_MESSAGE + HORIZONTAL_LINE);
         } else {
-            System.out.println(Constants.HORIZONTAL_LINE + FIND_MESSAGE);
+            String FIND_MESSAGE = "Here are the matching tasks in your list:";
+            System.out.println(HORIZONTAL_LINE + FIND_MESSAGE);
             int numOfInfo = 1;
             for (Task foundTask: foundTasks) {
                 System.out.println(numOfInfo + ". " + foundTask.toString());
                 numOfInfo++;
             }
-            System.out.print(Constants.HORIZONTAL_LINE);
+            System.out.print(HORIZONTAL_LINE);
         }
     }
 
-    public static void printNextCommandMessage() {
+    public void printNextCommandMessage() {
 
-        System.out.print(Constants.HORIZONTAL_LINE + NEXT_COMMAND_MESSAGE + Constants.HORIZONTAL_LINE);
+        String NEXT_COMMAND_MESSAGE = "What else?" + "\n";
+        System.out.print(HORIZONTAL_LINE + NEXT_COMMAND_MESSAGE + HORIZONTAL_LINE);
     }
 
     /**
-     * Extracts out
+     * Extracts out date and time by looking for date strings in YYYY-MM-DD format.
      * @param dateString date string
      * @return date in MMM dd yyyy if the user inputs date in YYYY-MM-DD format;
      * else returns original string
      * @throws DateTimeParseException if the date string input is not a valid date
      */
-    public static String extractDate(String dateString) throws DateTimeParseException {
-
-        /** Looks for YYYY-MM-DD formatting */
+    public String extractDate(String dateString) throws DateTimeParseException {
         Pattern pattern = Pattern.compile("\\d{4}-\\d{2}-\\d{2}");
         Matcher matcher = pattern.matcher(dateString);
 

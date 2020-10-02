@@ -3,6 +3,7 @@ package src.main.java.commands;
 import src.main.java.storage.Storage;
 import src.main.java.tasktypes.TasksList;
 import src.main.java.userInterface.Ui;
+import src.main.java.userInterface.WarningMessages;
 
 import java.io.IOException;
 
@@ -11,25 +12,33 @@ import java.io.IOException;
  */
 public class DoneCommand extends Command {
 
-    /** Constructor for DoneCommand */
+    /**
+     * Constructor for DoneCommand
+     * @param response user input string
+     */
     public DoneCommand(String response) {
 
         super(response);
     }
 
-    /** Override execute() method. */
+    /** Override execute() method.
+     * @param tasksList TasksList that stores tasks
+     * @param ui Ui that shows text user interface
+     * @param warningMessages WarningMessages that show warning messages
+     * @param storage Storage that reads and updates .txt file
+     */
     @Override
-    public void execute(TasksList tasksList) {
+    public void execute(TasksList tasksList, Ui ui, WarningMessages warningMessages, Storage storage) {
 
         String[] commands = response.trim().split(" ", 2);
         String doneIndex = commands[1].trim();
         int taskNumber = Integer.parseInt(doneIndex) - 1;
-        TasksList.tasks.get(taskNumber).setDone();
+        tasksList.tasks.get(taskNumber).setDone();
         try {
-            Storage.updateFile();
+            storage.updateFile(tasksList);
         } catch (IOException e) {
-            System.out.println("wrong update");
+            System.out.println(warningMessages.ILLEGAL_IO_WARNING);
         }
-        Ui.printDoneMessage(taskNumber);
+        ui.printDoneMessage(taskNumber, tasksList);
     }
 }
